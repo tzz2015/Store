@@ -32,6 +32,8 @@ public class UerServiceImpl implements IUserService {
         if (result != null) {
             throw new UserNameDuplicatedException("用户名已经被注册");
         }
+        // 密码加密
+
         // 数据补全
         user.setIsDelete(0);
         user.setCreatedUser(user.getUsername());
