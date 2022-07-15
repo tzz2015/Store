@@ -22,7 +22,7 @@ public class UserServiceTests {
     public void register() {
         try {
             User user = new User();
-            user.setUsername("梁媛媛");
+            user.setUsername("小海豚");
             user.setPassword("123456");
             userService.register(user);
             System.out.println("操作成功");

@@ -7,8 +7,10 @@ import com.cy.store.service.ex.InsertException;
 import com.cy.store.service.ex.UserNameDuplicatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author: LYF
@@ -33,6 +35,10 @@ public class UerServiceImpl implements IUserService {
             throw new UserNameDuplicatedException("用户名已经被注册");
         }
         // 密码加密
+        String oldPassword = user.getPassword();
+        String salt = UUID.randomUUID().toString().toUpperCase();
+        user.setSalt(salt);
+        user.setPassword(getMD5Password(oldPassword, salt));
 
         // 数据补全
         user.setIsDelete(0);
@@ -46,5 +52,12 @@ public class UerServiceImpl implements IUserService {
         if (rows != 1) {
             throw new InsertException("注册异常了");
         }
+    }
+
+    private String getMD5Password(String password, String salt) {
+        for (int i = 0; i < 3; i++) {
+            password = DigestUtils.md5DigestAsHex((salt + password + salt).getBytes()).toUpperCase();
+        }
+        return password;
     }
 }
