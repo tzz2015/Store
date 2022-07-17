@@ -1,10 +1,7 @@
 package com.cy.store.service.ex;
 
-/**
- * @author: LYF
- * @date: 2022/7/13
- */
-public class InsertException extends ServiceException{
+/** 插入数据的异常 */
+public class InsertException extends ServiceException {
     public InsertException() {
         super();
     }

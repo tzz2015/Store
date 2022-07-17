@@ -4,7 +4,9 @@ import com.cy.store.entity.User;
 import com.cy.store.mapper.UserMapper;
 import com.cy.store.service.IUserService;
 import com.cy.store.service.ex.InsertException;
+import com.cy.store.service.ex.PasswordNotMatchException;
 import com.cy.store.service.ex.UserNameDuplicatedException;
+import com.cy.store.service.ex.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -53,6 +55,31 @@ public class UerServiceImpl implements IUserService {
             throw new InsertException("注册异常了");
         }
     }
+
+    @Override
+    public User login(String username, String password) {
+        User result = userMapper.findByUserName(username);
+        if (result == null) {
+            throw new UserNotFoundException("用户数据不存在");
+        }
+        // 将用户密码按之前的加密规则获取加密后的密码
+        String newPassword = getMD5Password(password, result.getSalt());
+        String oldPassword = result.getPassword();
+        // 比较
+        if (!newPassword.equals(oldPassword)) {
+            throw new PasswordNotMatchException("用户密码错误");
+        }
+        // 判断is_delete 字段判断用户是否已经删除
+        if (result.getIsDelete() == 1) {
+            throw new UserNotFoundException("用户数据不存在");
+        }
+        User user = new User();
+        user.setUsername(result.getUsername());
+        user.setUid(result.getUid());
+        user.setAvatar(result.getAvatar());
+        return user;
+    }
+
 
     private String getMD5Password(String password, String salt) {
         for (int i = 0; i < 3; i++) {

@@ -1,10 +1,7 @@
 package com.cy.store.service.ex;
 
-/**
- * @author: LYF
- * @date: 2022/7/13
- */
-public class ServiceException extends RuntimeException{
+/** 业务异常的基类 */
+public class ServiceException extends RuntimeException {
     public ServiceException() {
         super();
     }

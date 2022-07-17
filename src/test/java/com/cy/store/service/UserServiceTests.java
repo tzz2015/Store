@@ -33,4 +33,10 @@ public class UserServiceTests {
 
     }
 
+    @Test
+    public void login() {
+        User user = userService.login("liuyufei", "123456");
+        System.out.println(user);
+    }
+
 }

@@ -14,5 +14,10 @@ public interface IUserService {
      */
     void register(User user);
 
+    /**
+     * 用户登录
+     */
+    User login(String username, String password);
+
 
 }
