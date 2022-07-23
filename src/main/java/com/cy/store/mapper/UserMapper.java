@@ -26,4 +26,11 @@ public interface UserMapper {
 
     User findByUid(Integer uid);
 
+    /**
+     * 根据uid更新用户资料
+     * @param user 封装了用户id和新个人资料的对象
+     * @return 受影响的行数
+     */
+    Integer updateInfoByUid(User user);
+
 }

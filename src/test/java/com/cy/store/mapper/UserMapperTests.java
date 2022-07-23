@@ -45,4 +45,18 @@ public class UserMapperTests {
         System.out.println(userMapper.findByUid(8));
     }
 
+    @Test
+    public void updateInfoByUid() {
+        User user = new User();
+        user.setUid(4);
+        user.setPhone("17858802222");
+        user.setEmail("admin@cy.com");
+        user.setGender(1);
+        user.setModifiedUser("系统管理员");
+        user.setModifiedTime(new Date());
+        Integer rows = userMapper.updateInfoByUid(user);
+        System.out.println("rows=" + rows);
+    }
+
+
 }

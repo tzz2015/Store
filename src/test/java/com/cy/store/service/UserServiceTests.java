@@ -44,4 +44,33 @@ public class UserServiceTests {
       userService.changePassword(4,"管理员","123456","654321");
     }
 
+    @Test
+    public void getByUid() {
+        try {
+            Integer uid = 4;
+            User user = userService.getByUid(uid);
+            System.out.println(user);
+        } catch (ServiceException e) {
+            System.out.println(e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void changeInfo() {
+        try {
+            Integer uid = 5;
+            String username = "数据管理员";
+            User user = new User();
+            user.setPhone("15512328888");
+            user.setEmail("admin03@cy.cn");
+            user.setGender(2);
+            userService.changeInfo(uid, username, user);
+            System.out.println("OK.");
+        } catch (ServiceException e) {
+            System.out.println(e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
