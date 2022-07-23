@@ -3,10 +3,7 @@ package com.cy.store.service.impl;
 import com.cy.store.entity.User;
 import com.cy.store.mapper.UserMapper;
 import com.cy.store.service.IUserService;
-import com.cy.store.service.ex.InsertException;
-import com.cy.store.service.ex.PasswordNotMatchException;
-import com.cy.store.service.ex.UserNameDuplicatedException;
-import com.cy.store.service.ex.UserNotFoundException;
+import com.cy.store.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -78,6 +75,28 @@ public class UerServiceImpl implements IUserService {
         user.setUid(result.getUid());
         user.setAvatar(result.getAvatar());
         return user;
+    }
+
+    @Override
+    public void changePassword(Integer uid,
+                               String username,
+                               String oldPassword,
+                               String newPassword) {
+        User result = userMapper.findByUid(uid);
+        if (result == null || result.getIsDelete() == 1) {
+            throw new UserNotFoundException("用户数据不存在");
+        }
+        // 原始密码和数据库密码进行比较
+        String oldMd5Password = getMD5Password(oldPassword, result.getSalt());
+        if (!oldMd5Password.equals(result.getPassword())) {
+            throw new PasswordNotMatchException("密码错误");
+        }
+        // 设置新密码
+        String newMd5Password = getMD5Password(newPassword, result.getSalt());
+        Integer row = userMapper.updatePasswordByUid(uid, newMd5Password, username, new Date());
+        if (row != 1) {
+            throw new UpdateException("修改密码异常");
+        }
     }
 
 

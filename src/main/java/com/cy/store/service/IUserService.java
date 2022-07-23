@@ -19,5 +19,15 @@ public interface IUserService {
      */
     User login(String username, String password);
 
+    /**
+     * 修改密码
+     *
+     * @param uid         当前登录的用户id
+     * @param username    用户名
+     * @param oldPassword 原密码
+     * @param newPassword 新密码
+     */
+    public void changePassword(Integer uid, String username, String oldPassword, String newPassword);
+
 
 }

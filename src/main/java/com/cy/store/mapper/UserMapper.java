@@ -1,7 +1,8 @@
 package com.cy.store.mapper;
 
 import com.cy.store.entity.User;
-import org.mybatis.spring.annotation.MapperScan;
+
+import java.util.Date;
 
 /**
  * @author: LYF
@@ -17,5 +18,12 @@ public interface UserMapper {
     Integer insert(User user);
 
     User findByUserName(String username);
+
+    Integer updatePasswordByUid(Integer uid,
+                                String password,
+                                String modifiedUser,
+                                Date modifiedTime);
+
+    User findByUid(Integer uid);
 
 }
