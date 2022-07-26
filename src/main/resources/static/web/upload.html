@@ -242,6 +242,36 @@
 			</div>
 		</footer>
 		<!--页脚结束-->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				console.log("cookie中的avatar=" + $.cookie("avatar"));
+				$("#img-avatar").attr("src", $.cookie("avatar"));
+			});
+
+			$("#btn-change-avatar").click(function() {
+				$.ajax({
+					url: "/users/change_avatar",
+					type: "POST",
+					data: new FormData($("#form-change-avatar")[0]),
+					dataType: "JSON",
+					processData: false, // processData处理数据
+					contentType: false, // contentType发送数据的格式
+					success: function(json) {
+						if (json.state == 200) {
+							$("#img-avatar").attr("src", json.data);
+							$.cookie("avatar", json.data, {expires: 7});
+						} else {
+							alert("修改失败！" + json.message);
+						}
+					},
+					error: function(xhr) {
+						alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+						location.href = "login.html";
+					}
+				});
+			});
+		</script>
+
 	</body>
 
 </html>

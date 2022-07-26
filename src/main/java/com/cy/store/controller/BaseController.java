@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class BaseController {
     public static final int OK = 200;
 
-    @ExceptionHandler(ServiceException.class)
+    @ExceptionHandler({ServiceException.class, FileUploadIOException.class})
     public JsonResult<Void> handleException(Throwable e) {
         JsonResult<Void> result = new JsonResult<Void>(e);
         if (e instanceof UsernameDuplicateException) {
@@ -59,8 +59,10 @@ public class BaseController {
         }
         return result;
     }
+
     /**
      * 从HttpSession对象中获取uid
+     *
      * @param session HttpSession对象
      * @return 当前登录的用户的id
      */
@@ -70,10 +72,12 @@ public class BaseController {
 
     /**
      * 从HttpSession对象中获取用户名
+     *
      * @param session HttpSession对象
      * @return 当前登录的用户名
      */
     protected final String getUsernameFromSession(HttpSession session) {
         return session.getAttribute("username").toString();
     }
+
 }

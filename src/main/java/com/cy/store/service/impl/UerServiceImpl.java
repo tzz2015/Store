@@ -160,7 +160,7 @@ public class UerServiceImpl implements IUserService {
 
     @Override
     public void changeAvatar(Integer uid, String username, String avatar) {
-// 调用userMapper的findByUid()方法，根据参数uid查询用户数据
+        // 调用userMapper的findByUid()方法，根据参数uid查询用户数据
         User result = userMapper.findByUid(uid);
         // 检查查询结果是否为null
         if (result == null) {
