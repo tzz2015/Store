@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 /**
  * @author: LYF
  * @date: 2022/7/12
@@ -25,5 +27,13 @@ public class AddressServiceTests {
         address.setPhone("1785802974");
         address.setAddress("雁塔区小寨赛格");
         addressService.addNewAddress(4, "管理员", address);
+    }
+
+    @Test
+    public void findByUid() {
+        List<Address> list = addressService.findByUid(4);
+        for (Address address : list) {
+            System.out.println(address);
+        }
     }
 }

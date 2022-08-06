@@ -32,4 +32,12 @@
         WHERE uid = #{uid}
     </select>
 
+    <!-- 查询某用户的收货地址列表数据：List<Address> findByUid(Integer uid) -->
+    <select id="findByUid" resultMap="AddressEntityMap">
+        SELECT *
+        FROM t_address
+        WHERE uid = #{uid}
+        ORDER BY is_default DESC, created_time DESC
+    </select>
+
 </mapper>

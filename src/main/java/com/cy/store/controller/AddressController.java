@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @描述：
@@ -26,6 +27,11 @@ public class AddressController extends BaseController {
         String username = getUsernameFromSession(httpSession);
         addressService.addNewAddress(uid, username, address);
         return new JsonResult<>(OK);
+    }
 
+    @RequestMapping({"", "/"})
+    public JsonResult<List<Address>> getAddressByUid(HttpSession httpSession) {
+        Integer uid = getUidFromSession(httpSession);
+        return new JsonResult<>(OK, addressService.findByUid(uid));
     }
 }
